@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { resolve } from "path";
+import convertToTrueColorWithDithering from "./converter";
 
 interface ConverterResponse {
     hello: string;
@@ -18,5 +19,13 @@ export const helloHandler = (req: Request, res: Response) => {
     const { name = "World!"} = params;
     const response = helloBuilder(name);
     return res.json(response);
+}
+
+export const converterHandler = async (req: Request, res: Response) => {
+    const inputFilePath = resolve(__dirname, "..", "public", "rocket.png");
+    const outputFilePath = resolve(__dirname, "..", "public", "rocket_new.png");
+
+    await convertToTrueColorWithDithering(inputFilePath, outputFilePath);
+    return res.sendFile(outputFilePath);
 }
 

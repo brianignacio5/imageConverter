@@ -1,5 +1,5 @@
 import express from "express";
-import { rootHandler, helloHandler } from "./handlers";
+import { rootHandler, helloHandler, converterHandler } from "./handlers";
 
 const app = express();
 
@@ -10,6 +10,8 @@ app.use(express.static('public'));
 app.get("/", rootHandler);
 
 app.get('/hello/:name', helloHandler);
+
+app.get("/conv", converterHandler);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
